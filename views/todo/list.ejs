@@ -1,3 +1,11 @@
+<!-- /**
+ * Filename: list.ejs
+ * Author: Alejandro Akifarry
+ * SID: 301-195-788
+ * WebApp: comp229005-f2022-301195788
+ * Date: Oct 29, 2022
+ */ -->
+
 <%- include ('../partials/header') %>
 
   <!-- Main Content -->
@@ -9,7 +17,7 @@
             <!-- ------------------------ -->
             <!-- Fix the ADD button below -->
             <!-- ------------------------ -->
-            <a href="#" class="btn btn-primary" role="button">
+            <a href="/todo/add" class="btn btn-primary" role="button">
                 <i class="fas fa-plus-circle"></i> 
                 Add a new Todo
             </a> 
@@ -42,14 +50,14 @@
                         <!-- ------------------------- -->
                         <!-- Fix the EDIT button below -->
                         <!-- ------------------------- -->
-                        <a href="#" class="btn btn-primary btn-sm">
+                        <a href="/todo/edit/<%= TodoList[i]._id %>" class="btn btn-primary btn-sm">
                         <i class="fas fa-pencil-alt"></i></a>
                     </td>
                     <td class="text-center">
                         <!-- --------------------------- -->
                         <!-- Fix the DELETE button below -->
                         <!-- --------------------------- -->
-                        <a href="#" class="btn btn-danger btn-sm">
+                        <a href="/todo/delete/<%= TodoList[i]._id %>" class="btn btn-danger btn-sm">
                         <i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>

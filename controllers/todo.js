@@ -1,3 +1,11 @@
+/**
+ * Filename: todo.js
+ * Author: Alejandro Akifarry
+ * SID: 301-195-788
+ * WebApp: comp229005-f2022-301195788
+ * Date: Oct 29, 2022
+ */
+
 // create a reference to the model
 let TodoModel = require('../models/todo');
 
@@ -48,6 +56,20 @@ module.exports.details = (req, res, next) => {
 module.exports.displayEditPage = (req, res, next) => {
     
     // ADD YOUR CODE HERE
+    let id = req.params.id;
+
+    TodoModel.findById(id, (err, todoToEdit) => {
+        if (err) {
+            console.log(err);
+            res.end(err);
+        } else {
+            res.render('todo/add_edit', {
+                title: 'Edit To-Do',
+                todo: todoToEdit,
+                userName: req.user ? req.user.username : ''
+            });
+        }
+    });
 
 }
 
@@ -66,20 +88,42 @@ module.exports.processEditPage = (req, res, next) => {
     });
 
     // ADD YOUR CODE HERE
-
+    TodoModel.updateOne({_id: id}, updatedTodo, (err) => {
+        if (err) {
+            console.log(err);
+            res.end(err);
+        } else {
+            res.redirect('/todo/list');
+        }
+    });
 }
 
 // Deletes a todo based on its id.
 module.exports.performDelete = (req, res, next) => {
 
     // ADD YOUR CODE HERE
+    let id = req.params.id;
 
+    TodoModel.remove({_id: id}, (err) => {
+        if (err) {
+            console.log(err);
+            res.end(err);
+        } else {
+            res.redirect('/todo/list');
+        }
+    });
 }
 
 // Renders the Add form using the add_edit.ejs template
 module.exports.displayAddPage = (req, res, next) => {
 
-    // ADD YOUR CODE HERE          
+    // ADD YOUR CODE HERE
+    let newTodo = TodoModel();
+    
+    res.render('todo/add_edit', {
+        title: 'Add a new To-Do',
+        todo: newTodo
+    });
 
 }
 
@@ -96,5 +140,13 @@ module.exports.processAddPage = (req, res, next) => {
     });
 
     // ADD YOUR CODE HERE
+    TodoModel.create(newTodo, (err, todo) => {
+        if (err) {
+            console.log(err);
+            res.end(err);
+        } else {
+            res.redirect('/todo/list');
+        }
+    });
     
 }
